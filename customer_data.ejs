@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sales Graphs</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <canvas id="salesChart" width="400" height="200"></canvas>
+  <canvas id="productSalesChart" width="400" height="200"></canvas>
+
+  <script>
+    async function fetchData(url) {
+      const response = await fetch(url);
+      const data = await response.json();
+      return data;
+    }
+
+    async function renderCharts() {
+      const salesData = await fetchData('/sales-data');
+      const productSalesData = await fetchData('/product-sales-data');
+
+      const salesLabels = salesData.map(item => item.order_date);
+      const salesValues = salesData.map(item => item.total_sales);
+      
+      const productSalesLabels = productSalesData.map(item => item.product_id);
+      const productSalesValues = productSalesData.map(item => item.total_sales);
+
+      const salesCtx = document.getElementById('salesChart').getContext('2d');
+      const salesChart = new Chart(salesCtx, {
+        type: 'line',
+        data: {
+          labels: salesLabels,
+          datasets: [{
+            label: 'Total Sales',
+            data: salesValues,
+            borderColor: 'rgb(75, 192, 192)',
+            tension: 0.1
+          }]
+        }
+      });
+
+      const productSalesCtx = document.getElementById('productSalesChart').getContext('2d');
+      const productSalesChart = new Chart(productSalesCtx, {
+        type: 'bar',
+        data: {
+          labels: productSalesLabels,
+          datasets: [{
+            label: 'Product Sales',
+            data: productSalesValues,
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          }
+        }
+      });
+    }
+
+    renderCharts();
+  </script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customers List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .card {
+            width: 300px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-body p {
+            margin: 5px 0;
+        }
+
+        .card-links {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .card-links a {
+            text-decoration: none;
+            color: #007bff;
+            margin: 0 10px;
+        }
+
+        .card-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 style="text-align: center;">Customers List</h1>
+    <div class="card-container">
+        <% if(customers.length> 0){ %>
+            <% for(var i=0; i < customers.length; i++) { %>
+                <div class="card" ondblclick="location.href='/view-all-Order/<%= customers[i].customer_id %>'">
+                    <div class="card-header">Customer Details</div>
+                    <div class="card-body">
+                        <p><strong>Customer ID:</strong> <%- customers[i].customer_id %></p>
+                        <p><strong>Name:</strong> <%- customers[i].name %></p>
+                        <p><strong>Email:</strong> <%- customers[i].email %></p>
+                        <p><strong>Mobile No.:</strong> <%- customers[i].phone %></p>
+                        <p><strong>Membership Type:</strong> <%- customers[i].type %></p>
+                        <% if(customers[i].type==='subscription' ) { %>
+                            <p><strong>Start</strong></p><%= customers[i].subscription_start_date %>
+                            <p><strong>Expire</strong></p><%= customers[i].subscription_expiry_date %>
+                            <% }  %>
+                       
+                    </div>
+                    <div class="card-links">
+                        <% if(customers[i].type==='subscription' ) { %>
+                            <!-- If the customer is a subscription customer -->
+                            <a href="/take-order-instant">Take Order</a>
+                            <% } else { %>
+                                <!-- If the customer is not a subscription customer -->
+                                <a href="/takeOrder/<%= customers[i].customer_id %>">Take Order</a>
+                            <% } %>
+                    </div>
+                </div>
+                <% } %>
+                    <% } else { %>
+                        <p class="no-customers" style="text-align: center;">No customers found</p>
+                        <% } %>
+    </div>
+    <h3 style="text-align: center;">Add Customer</h3>
+    <p style="text-align: center;"><a href="/addCustomer">Add Customer</a></p>
+    <h3 style="text-align: center;">Add Menu</h3>
+    <p style="text-align: center;"><a href="/add-food">Add Food</a></p>
+    <h3 style="text-align: center;">Instant Customer Order</h3>
+    <p style="text-align: center;"><a href="/take-order-instant">Take Order</a></p>
+</body>
+
+</html>

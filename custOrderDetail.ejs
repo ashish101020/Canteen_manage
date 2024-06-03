@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Details</title>
+    <link rel="stylesheet" href="path_to_css/bootstrap.min.css">
+    <style>
+        /* Custom Styles */
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .form-container {
+            margin-top: 50px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #343a40;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+        .table {
+            margin-top: 30px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .table th {
+            background-color: #343a40;
+            color: #fff;
+        }
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <% if (CustomerType === 'prepaid') { %>
+            <h1 class="text-center">Add Amount</h1>
+            <form action="/addAmount" method="POST">
+                <div class="form-group">
+                    <label for="customerId">Customer ID:</label>
+                    <input type="number" class="form-control" id="customerId" name="customerId" value="<%= custId %>" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="amount">Amount:</label>
+                    <input type="number" class="form-control" id="amount" name="amount">
+                </div>
+                <button type="submit" class="btn btn-danger btn-block">Submit</button>
+            </form>
+            <% }else { %>
+                <a href="/take-attendance/:CustId">Take Attendance</a>
+            <%}%>    
+        </div>
+
+        <h1 class="text-center">Order Details</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total Amount</th>
+                    <th>Order Date</th>
+                    <% if (CustomerType === 'prepaid') { %>
+                    <th>Add Amount</th>
+                    <% } %>
+                    <th>Remaining Balance</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% Orders.forEach(order => { %>
+                <tr>
+                    <td><%= order.name %></td>
+                    <td><%= order.price %></td>
+                    <td><%= order.quantity %></td>
+                    <td><%= order.total_amount %></td>
+                    <td><%= order.order_date %></td>
+                    <% if (CustomerType === 'prepaid') { %>
+                    <td><%= order.addAmount %></td>
+                    <% } %>
+                    <td><%= order.remaining_balance %></td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+    <script src="path_to_js/bootstrap.min.js"></script>
+</body>
+
+</html>

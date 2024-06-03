@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        h1, h3 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            overflow-x: auto;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            text-align: center;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .no-employees {
+            text-align: center;
+            color: #777;
+        }
+
+        /* Responsive Styles */
+        @media only screen and (max-width: 768px) {
+            table {
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Employee Management</h1>
+    <table>
+        <tr>
+            <th>Employee ID</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Joining Date</th>
+            <th>Resign Date</th>
+            <th>Salary</th>
+            <th>Address</th>
+            <th>Adhar</th>
+            <th>Phone</th>
+            <th>Action</th>
+            <th>See Data</th>
+        </tr>
+        <% if(employees.length > 0){ %>
+            <% for(var i=0; i<employees.length; i++){ %>
+                <tr>
+                    <td><%- employees[i].employeeId %></td>
+                    <td><%- employees[i].name %></td>
+                    <td><%- employees[i].age %></td>
+                    <td><%- employees[i].joiningDate %></td>
+                    <td><%- employees[i].resignDate %></td>
+                    <td><%- employees[i].salary %></td>
+                    <td><%- employees[i].address %></td>
+                    <td><%- employees[i].adhar %></td>
+                    <td><%- employees[i].phone %></td>
+                    <td><a href="/add-salary/<%= employees[i].employeeId %>">Add Salary</a></td>
+                    <td><a href="/emp-salary-data/<%= employees[i].employeeId %>">Details</a></td>
+                </tr>
+            <%}%>
+        <% } else { %>
+            <tr>
+                <td colspan="11" class="no-employees">No employees found</td>
+            </tr>
+        <% } %>
+    </table>
+    <h3>Add Employee</h3>
+    <p style="text-align: center;"><a href="/add-employee">Add Employee</a></p>
+</body>
+</html>

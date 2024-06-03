@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Salary</title>
+</head>
+<body>
+    <h1>Add Salary</h1>
+    <form action="/add-salary/<%= employee.employeeId %>" method="post">
+        <label for="month">Month:</label><br>
+        <select id="month" name="month">
+            <option value="january">January</option>
+            <option value="february">February</option>
+            <option value="march">March</option>
+            <option value="april">April</option>
+            <option value="may">May</option>
+            <option value="june">June</option>
+            <option value="july">July</option>
+            <option value="august">August</option>
+            <option value="september">September</option>
+            <option value="october">October</option>
+            <option value="november">November</option>
+            <option value="december">December</option>
+        </select><br><br>
+        <label for="amount">Amount:</label><br>
+        <input type="number" id="amount" name="amount"><br><br>
+        <button type="submit">Add Salary</button>
+    </form>
+</body>
+</html>

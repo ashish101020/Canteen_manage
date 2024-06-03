@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Customer</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif; /* Apply Roboto font to the entire body */
+            background-image: url('apex-360-X8iQWD4cOaU-unsplash.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.676); /* Semi-transparent white background for form */
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="form-container">
+                    <h1 class="text-center">Add Customer</h1>
+                    <form action="/addCustomer" method="POST">
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" class="form-control" id="name" name="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone:</label>
+                            <input type="text" class="form-control" id="phone" name="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="type">Type:</label>
+                            <select class="form-control" id="type" name="type">
+                                <option value="subscription">Subscription</option>
+                                <option value="prepaid">Prepaid</option>
+                            </select>
+                        </div>
+                        <!-- Additional fields for subscription -->
+                        <div id="subscriptionFields" style="display: none;">
+                            <div class="form-group">
+                                <label for="expiryDate">Expiry Date:</label>
+                                <input type="date" class="form-control" id="expiryDate" name="expiryDate">
+                            </div>
+                        </div>
+                        <!-- Additional fields for prepaid -->
+                        <div id="prepaidFields" style="display: none;">
+                            <div class="form-group">
+                                <label for="balance">Prepaid Balance:</label>
+                                <input type="number" class="form-control" id="balance" name="balance">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-danger btn-block">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script>
+        document.getElementById("type").addEventListener("change", function() {
+            var type = this.value;
+            if (type === "subscription") {
+                document.getElementById("subscriptionFields").style.display = "block";
+                document.getElementById("prepaidFields").style.display = "none";
+            } else if (type === "prepaid") {
+                document.getElementById("subscriptionFields").style.display = "none";
+                document.getElementById("prepaidFields").style.display = "block";
+            }
+        });
+    </script>
+</body>
+</html>
